@@ -1,4 +1,13 @@
 <?php
+
+session_start();
+if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true ){
+  header("location: login.php");
+}
+
+
+
+
 $insert = false;
 $truncate = false;
 $update = false;
@@ -87,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
-    <title>Bootstrap demo</title>
+    <title>Crud-<?php echo $_SESSION['username']; ?></title>
 
 
   </head>
@@ -134,25 +143,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="curd.php">PHP-CURD</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav m-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="curd.php">Home</a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <?php
+    
+    require "components/nav.php";
+    ?>
 
       <?php
       
@@ -194,21 +188,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       
       ?>
       
-      <div class="container w-50 m-auto my-5">
-        <h1>Add Note!</h1>
-        <div class="row">
+      <div class="container w-50 m-auto my-5 text-center my-4">
+        <h1>Welcome - <?php echo $_SESSION['username']; ?> Add Note! Here</h1>
+        <div class="row my-3">
             <div class="col-md-12">
                 <form method="post" action="curd.php">
                     <div class="mb-3">
                       <input type="text" class="form-control" id="title" name="title" aria-describedby="title" placeholder="Enter Title here" >
                     </div>
                     <div class="mb-3">
-                      <label for="description" class="form-label">Description</label>
                       <textarea type="text" class="form-control" id="description" rows="5" name="description" placeholder="Enter Your Other Stuff here" ></textarea>
                     </div>
                    <div class="row justify-content-center ">
                     <div class="col-md-4 "> <button type="submit" name='submit' class="btn btn-dark w-50">Submit</button></div>
-                    <div class="col-md-4">  <button  class= "btn btn-dark w-50" id='truncate' name='truncate'>Clear All Notes</button></div>
+                    <div class="col-md-4">  <button  class= "btn btn-dark w-75" id='truncate' name='truncate'>Clear All Notes</button></div>
                   </form>
 
                   </div>
